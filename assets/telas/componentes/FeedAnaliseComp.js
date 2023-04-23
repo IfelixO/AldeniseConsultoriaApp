@@ -296,6 +296,6 @@ const styles = StyleSheet.create({
   analiseGraficoLegendaDadoValor: {
     fontFamily: "Montserratn",
     fontSize: 14,
-    width: 50,
+    width: 60,
   },
 });

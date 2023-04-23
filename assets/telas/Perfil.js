@@ -132,7 +132,7 @@ export default function Perfil({ navigation, route }) {
         <Text style={styles.rodapeSair} onPress={() => sair()}>
           Sair
         </Text>
-        <Text style={styles.rodapeExcluir}>Excluir conta</Text>
+        {/* <Text style={styles.rodapeExcluir}>Excluir conta</Text> */}
       </View>
       {/* </ScrollView> */}
     </SafeAreaView>

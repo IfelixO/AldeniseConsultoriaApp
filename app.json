@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ifelixo.aldeniseconsultoria"
     },
     "android": {
       "adaptiveIcon": {
@@ -24,7 +25,8 @@
       },
       "permissions": [
         "android.permission.RECORD_AUDIO"
-      ]
+      ],
+      "package": "com.ifelixo.aldeniseconsultoria"
     },
     "web": {
       "favicon": "./assets/favicon.png"

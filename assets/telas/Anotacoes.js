@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
@@ -146,7 +147,7 @@ export default function Feed({ navigation, route }) {
       listar();
     }
     if (confirma) {
-      setRenderiza(false)
+      setRenderiza(false);
     }
   });
 
@@ -154,19 +155,22 @@ export default function Feed({ navigation, route }) {
     <SafeAreaView style={styles.tela}>
       <StatusBar barStyle="light-content" backgroundColor="#032140" />
       <ScrollView style={styles.conteiner}>
-        <TouchableOpacity
-          style={styles.atualizar}
-          onPress={() => {
-            listar();
-            setRenderiza(true)
-          }}
-        >
-          <MaterialCommunityIcons
-            name="reload"
-            size={30}
-            color="rgb(50,50,50)"
-          />
-        </TouchableOpacity>
+        {renderiza ? (
+          <ActivityIndicator size={30} style={styles.atualizar} />
+        ) : (
+          <TouchableOpacity
+            style={styles.atualizar}
+            onPress={() => {
+              setRenderiza(true);
+            }}
+          >
+            <MaterialCommunityIcons
+              name="reload"
+              size={30}
+              color="rgb(50,50,50)"
+            />
+          </TouchableOpacity>
+        )}
 
         <View style={styles.cabecalho}>
           <Text style={styles.cabecalhoTitulo}>Anotações</Text>
@@ -404,7 +408,7 @@ const styles = StyleSheet.create({
   listaSkeleton: {
     marginTop: 60,
     width: "90%",
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 
   listaItem: {

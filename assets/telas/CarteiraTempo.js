@@ -175,7 +175,7 @@ export default function CarteiraTempo({ navigation, route }) {
         >
           <Entypo name="back" size={30} color="rgb(50, 50, 50)" />
         </TouchableOpacity>
-        <Text style={styles.titulo}>Movimentações</Text>
+        <Text style={styles.titulo}>Despesas variáveis</Text>
         <AddInput
           tela="CarteiraTempo"
           cor="#99B0AF"

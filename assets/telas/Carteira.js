@@ -11,6 +11,7 @@ import {
   SafeAreaView,
   ScrollView,
   StatusBar,
+  ActivityIndicator,
 } from "react-native";
 import CarteiraMapaComp from "./componentes/CarteiraMapaComp";
 import CarteiraTempoComp from "./componentes/CarteiraTempoComp";
@@ -99,18 +100,22 @@ export default function Carteira({ navigation, route }) {
     <SafeAreaView style={styles.tela}>
       <StatusBar barStyle="light-content" backgroundColor="#032140" />
       <ScrollView>
-        <TouchableOpacity
-          style={styles.atualizar}
-          onPress={() => {
-            setAtualizar(!atualizar);
-          }}
-        >
-          <MaterialCommunityIcons
-            name="reload"
-            size={30}
-            color="rgb(50,50,50)"
-          />
-        </TouchableOpacity>
+        {renderizaPag ? (
+          <ActivityIndicator size={30} style={styles.atualizar} />
+        ) : (
+          <TouchableOpacity
+            style={styles.atualizar}
+            onPress={() => {
+              setAtualizar(!atualizar);
+            }}
+          >
+            <MaterialCommunityIcons
+              name="reload"
+              size={30}
+              color="rgb(50,50,50)"
+            />
+          </TouchableOpacity>
+        )}
         <View style={styles.cabecalho}>
           <Text style={styles.cabecalhoTitulo}>Carteira</Text>
         </View>
@@ -215,8 +220,16 @@ export default function Carteira({ navigation, route }) {
             </View>
           </View>
         </View> */}
-        <CarteiraMapaComp renderizaPag={renderizaPag} setRenderizaMapa={setRenderizaMapa} atualizar={atualizar} />
-        <CarteiraTempoComp renderizaPag={renderizaPag} setRenderizaTempo={setRenderizaTempo} atualizar={atualizar} />
+        <CarteiraMapaComp
+          renderizaPag={renderizaPag}
+          setRenderizaMapa={setRenderizaMapa}
+          atualizar={atualizar}
+        />
+        <CarteiraTempoComp
+          renderizaPag={renderizaPag}
+          setRenderizaTempo={setRenderizaTempo}
+          atualizar={atualizar}
+        />
       </ScrollView>
     </SafeAreaView>
   );

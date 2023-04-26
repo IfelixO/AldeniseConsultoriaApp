@@ -22,8 +22,10 @@ export default function LoginFormCodigo(params) {
   const [login, setLogin] = useState(null);
   const [senha, setSenha] = useState(null);
   const [senhaR, setSenhaR] = useState(null);
+  const [carregando, setCarregando] = useState(false);
 
   async function cadastrar() {
+    setCarregando(true);
     let erro = false;
     let data = {
       login: login,
@@ -35,13 +37,13 @@ export default function LoginFormCodigo(params) {
     }
     if (senha.length < 8) {
       erro = true;
-      setErroSenha("Preencha uma senha válida");
+      setErroSenha("Preencha uma senha válida de 8 dígitos");
     }
     if (senha != senhaR) {
       erro = true;
       setErroSenhaR("As senhas não coicidem");
     }
-    return usuarioService
+    usuarioService
       .achar(data)
       .then((res) => {
         if (res.data) {
@@ -60,20 +62,19 @@ export default function LoginFormCodigo(params) {
               let usuario = {
                 id: params.usuario.id,
                 perfil: params.usuario.perfil,
-                nome: params.usuario.nome
-              }
-              params.cuidarCadastrar(usuario)
+                nome: params.usuario.nome,
+              };
+              params.cuidarCadastrar(usuario);
             })
             .catch((err) => {
               console.log(err);
             });
-          return true;
         } else {
-          return false;
+          setCarregando(false);
         }
       })
       .catch((err) => {
-        return false;
+        setCarregando(false);
       });
   }
 
@@ -112,14 +113,18 @@ export default function LoginFormCodigo(params) {
         }}
       />
       <Text style={styles.erro}>{erroSenhaR} </Text>
-      <TouchableOpacity
-        style={styles.bt}
-        onPress={() => {
-          cadastrar();
-        }}
-      >
-        <Text style={styles.textoBt}>Cadastrar</Text>
-      </TouchableOpacity>
+      {!carregando ? (
+        <TouchableOpacity
+          style={styles.bt}
+          onPress={() => {
+            cadastrar();
+          }}
+        >
+          <Text style={styles.textoBt}>Cadastrar</Text>
+        </TouchableOpacity>
+      ) : (
+        <ActivityIndicator />
+      )}
     </View>
   );
 }

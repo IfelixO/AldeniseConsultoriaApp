@@ -20,9 +20,9 @@ import { Skeleton } from "@rneui/themed";
 export default function Feed({ route, navigation }) {
   const [usuario, setUsuario] = useState(0);
   const [proverbioFrase, setproverbioFrase] = useState(
-    "A criatividade é a inteligência se divertindo."
+    "A sorte é o encontro da oportunidade com o preparo!"
   );
-  const [proverbioAutor, setproverbioAutor] = useState("Albert Einstein");
+  const [proverbioAutor, setproverbioAutor] = useState("Aldenise Oliveira");
 
   const [renderizaPag, setRenderizaPag] = useState(true);
   const [renderizaMeta, setRenderizaMeta] = useState(true);
@@ -45,14 +45,22 @@ export default function Feed({ route, navigation }) {
   return (
     <SafeAreaView style={styles.tela}>
       <StatusBar barStyle="light-content" backgroundColor="#032140" />
-      <TouchableOpacity
-        style={styles.atualizar}
-        onPress={() => {
-          setAtualizar(!atualizar);
-        }}
-      >
-        <MaterialCommunityIcons name="reload" size={30} color="white" />
-      </TouchableOpacity>
+      {renderizaPag ? (
+          <ActivityIndicator size={30} style={styles.atualizar} />
+        ) : (
+          <TouchableOpacity
+            style={styles.atualizar}
+            onPress={() => {
+              setAtualizar(!atualizar);
+            }}
+          >
+            <MaterialCommunityIcons
+              name="reload"
+              size={30}
+              color="white"
+            />
+          </TouchableOpacity>
+        )}
       <ScrollView>
         <View style={styles.cabecalhoForma}>
           <View style={styles.cabecalho}>

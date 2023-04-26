@@ -54,7 +54,7 @@ export default function LoginFormLogin(params) {
           nome: res.data.usuario,
           perfil: res.data.perfil,
           descricaoSaude: res.data.descricaoSaude,
-          descricaoAnalise: res.data.descricaoAnalise
+          descricaoAnalise: res.data.descricaoAnalise,
         };
         params.cuidarEntrar(usuario);
       })
@@ -89,20 +89,30 @@ export default function LoginFormLogin(params) {
       <Text style={styles.erro}>{erroSenha}</Text>
 
       {!carregando ? (
-        <TouchableOpacity
-          style={{
-            backgroundColor: "#003a36",
-            width: "90%",
-            height: 50,
-            borderRadius: 6,
-            justifyContent: "center",
-            alignItems: "center",
-            marginBottom: margin,
-          }}
-          onPress={() => entrar()}
-        >
-          <Text style={styles.textoAcessar}>Acessar</Text>
-        </TouchableOpacity>
+        <>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#003a36",
+              width: "90%",
+              height: 50,
+              borderRadius: 6,
+              justifyContent: "center",
+              alignItems: "center",
+              marginBottom: margin,
+            }}
+            onPress={() => entrar()}
+          >
+            <Text style={styles.textoAcessar}>Acessar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.bt2}
+            onPress={() => {
+              params.setPagForm(1);
+            }}
+          >
+            <Text style={styles.textoBt}>Voltar</Text>
+          </TouchableOpacity>
+        </>
       ) : (
         <ActivityIndicator style={styles.carregando} />
       )}
@@ -111,7 +121,7 @@ export default function LoginFormLogin(params) {
 }
 
 const styles = StyleSheet.create({
-  carregando:{
+  carregando: {
     marginBottom: -20,
   },
 

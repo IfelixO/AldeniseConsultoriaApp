@@ -128,7 +128,7 @@ export default function CarteiraTempoComp(params) {
             size={24}
             color="black"
           />
-          <Text style={styles.tempoCabecalhoTitulo}>Últimas movimentações</Text>
+          <Text style={styles.tempoCabecalhoTitulo}>Despesas variáveis</Text>
           <Entypo
             style={styles.tempoCabecalhoEdit}
             name="dots-three-horizontal"

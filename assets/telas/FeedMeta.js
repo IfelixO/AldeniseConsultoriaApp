@@ -243,7 +243,7 @@ export default function FeedMeta({ route, navigation }) {
               animation="pulse"
             />
             <Text style={styles.cabecalhoPrevisaoTitulo}>
-              Previsão de conclusão
+              Roda financeira
             </Text>
             <Skeleton
               style={styles.cabecalhoPrevisaoValor}

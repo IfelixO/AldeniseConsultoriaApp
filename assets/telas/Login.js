@@ -32,6 +32,8 @@ export default function Login() {
   const [carregandoToken, setCarregandoToken] = useState(true);
   const [visibilidadeCodigo, setVisibilidadeCodigo] = useState(false);
 
+  const [carregando, setCarregando] = useState(false);
+
   function tecladoEntra() {
     Animated.timing(logoW, {
       toValue: 170,
@@ -60,7 +62,7 @@ export default function Login() {
   }
 
   function loginAuto(token) {
-    console.log('token')
+    // console.log("token");
     let data = { token: token };
     usuarioService
       .loginAuto(data)
@@ -88,6 +90,7 @@ export default function Login() {
   }
 
   function validar() {
+    setCarregando(true);
     let data = {
       codigo: codigo,
     };
@@ -95,13 +98,13 @@ export default function Login() {
       .achar(data)
       .then((res) => {
         if (res.data) {
-          console.log(res.data)
+          // console.log(res.data);
           setUsuarioA({
             id: res.data.id,
             nome: res.data.nome,
             perfil: res.data.perfil,
             descricaoSaude: res.data.descricaoSaude,
-            descricaoAnalise: res.data.descricaoAnalise
+            descricaoAnalise: res.data.descricaoAnalise,
           });
           setPagForm(2);
         }
@@ -126,7 +129,7 @@ export default function Login() {
 
   function cuidarEntrar(usuario) {
     AsyncStorage.setItem("USUARIO", JSON.stringify(usuario)).then((res) => {
-      console.log(res)
+      // console.log(res);
       navigation.reset({
         index: 0,
         routes: [
@@ -193,26 +196,28 @@ export default function Login() {
           </View>
         ) : null}
         {/* {!carregandoToken ? ( */}
-          <Animated.View
-            style={[
-              styles.inputs,
-              { opacity: opacity, transform: [{ translateY: offset.y }] },
-            ]}
-          >
-            {pagForm == 1 ? (
-              <>
-                {visibilidadeCodigo ? (
-                  <>
-                    <View style={styles.inputV}>
-                      <Input
-                        style={styles.input}
-                        placeholder="Código de cadastro"
-                        autoCorrect={false}
-                        onChangeText={(value) => {
-                          setCodigo(value);
-                        }}
-                      />
-                    </View>
+        <Animated.View
+          style={[
+            styles.inputs,
+            { opacity: opacity, transform: [{ translateY: offset.y }] },
+          ]}
+        >
+          {pagForm == 1 ? (
+            <>
+              {visibilidadeCodigo ? (
+                <>
+                  <View style={styles.inputV}>
+                    <Input
+                      style={styles.input}
+                      placeholder="Código de cadastro"
+                      autoCorrect={false}
+                      onChangeText={(value) => {
+                        setCodigo(value);
+                      }}
+                    />
+                  </View>
+
+                  {!carregando ? (
                     <TouchableOpacity style={styles.bt} onPress={() => {}}>
                       <Text
                         style={styles.textoBt}
@@ -223,49 +228,56 @@ export default function Login() {
                         Cadastrar login e senha
                       </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.bt2}
+                  ) : (
+                    <ActivityIndicator style={styles.carregando} />
+                  )}
+
+                  <TouchableOpacity
+                    style={styles.bt2}
+                    onPress={() => {
+                      setVisibilidadeCodigo(false);
+                    }}
+                  >
+                    <Text style={styles.textoBt}>Voltar</Text>
+                  </TouchableOpacity>
+                </>
+              ) : (
+                <>
+                  <TouchableOpacity style={styles.bt} onPress={() => {}}>
+                    <Text
+                      style={styles.textoBt}
                       onPress={() => {
-                        setVisibilidadeCodigo(false);
+                        setVisibilidadeCodigo(true);
                       }}
                     >
-                      <Text style={styles.textoBt}>Voltar</Text>
-                    </TouchableOpacity>
-                  </>
-                ) : (
-                  <>
-                    <TouchableOpacity style={styles.bt} onPress={() => {}}>
-                      <Text
-                        style={styles.textoBt}
-                        onPress={() => {
-                          setVisibilidadeCodigo(true);
-                        }}
-                      >
-                        Entrar com código de cadastro
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.bt2}
-                      onPress={() => {
-                        setPagForm(3);
-                      }}
-                    >
-                      <Text style={styles.textoBt}>Já tenho conta</Text>
-                    </TouchableOpacity>
-                  </>
-                )}
-              </>
-            ) : null}
-            {pagForm == 2 ? (
-              <LoginFormCodigo
-                cuidarCadastrar={cuidarCadastrar}
-                usuario={usuarioA}
-              />
-            ) : null}
-            {pagForm == 3 ? (
-              <LoginFormLogin cuidarEntrar={cuidarEntrar} />
-            ) : null}
-          </Animated.View>
+                      Entrar com código de cadastro
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.bt2}
+                    onPress={() => {
+                      setPagForm(3);
+                    }}
+                  >
+                    <Text style={styles.textoBt}>Já tenho conta</Text>
+                  </TouchableOpacity>
+                </>
+              )}
+            </>
+          ) : null}
+          {pagForm == 2 ? (
+            <LoginFormCodigo
+              cuidarCadastrar={cuidarCadastrar}
+              usuario={usuarioA}
+            />
+          ) : null}
+          {pagForm == 3 ? (
+            <LoginFormLogin
+              setPagForm={setPagForm}
+              cuidarEntrar={cuidarEntrar}
+            />
+          ) : null}
+        </Animated.View>
         {/* // ) : (
         //   <ActivityIndicator style={styles.indicador} />
         // )} */}
@@ -385,5 +397,9 @@ const styles = StyleSheet.create({
     fontFamily: "Montserratb",
     height: 50,
     textAlignVertical: "center",
+  },
+
+  carregando: {
+    width: 220
   },
 });

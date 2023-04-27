@@ -171,11 +171,14 @@ const styles = StyleSheet.create({
     fontFamily: "Montserratb",
     fontSize: 14,
     color: "black",
+    textAlign: 'center',
+    width: 300
   },
 
   proverAutor: {
     fontFamily: "Montserratn",
     fontSize: 12,
     color: "black",
+    textAlign: 'center',
   },
 });

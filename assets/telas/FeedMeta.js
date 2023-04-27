@@ -219,7 +219,7 @@ export default function FeedMeta({ route, navigation }) {
                 width={150}
                 animation="pulse"
               />
-              <Entypo
+              {/* <Entypo
                 style={styles.cabecalhoTituloEdit}
                 name="edit"
                 size={16}
@@ -234,7 +234,7 @@ export default function FeedMeta({ route, navigation }) {
                     tela: "FeedMeta",
                   })
                 }
-              />
+              /> */}
             </View>
             <Skeleton
               style={styles.cabecalhoProgressao}
@@ -256,7 +256,7 @@ export default function FeedMeta({ route, navigation }) {
           <View style={styles.cabecalho}>
             <View style={styles.cabecalhoTitulo}>
               <Text style={styles.cabecalhoTituloTexto}>{titulo}</Text>
-              <Entypo
+              {/* <Entypo
                 style={styles.cabecalhoTituloEdit}
                 name="edit"
                 size={16}
@@ -271,7 +271,7 @@ export default function FeedMeta({ route, navigation }) {
                     tela: "FeedMeta",
                   })
                 }
-              />
+              /> */}
             </View>
             <Text style={styles.cabecalhoProgressao}>
               {progressaoMeta.toLocaleString("pt-BR", {

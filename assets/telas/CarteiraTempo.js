@@ -101,12 +101,12 @@ export default function CarteiraTempo({ navigation, route }) {
       }
       let movimentacoesOrdem = [];
       movimentacoesTodas.forEach((el, i) => {
-        if (i > 0 && el != undefined && el != "") {
+        if (el != undefined && el != "") {
           movimentacoesOrdem.unshift(el);
         }
       });
       movimentacoesOrdem.push(movimentacaoHoje);
-
+      
       let data = {
         id: usuario.id,
         entrada1: movimentacoesOrdem[0] || '',
@@ -142,7 +142,6 @@ export default function CarteiraTempo({ navigation, route }) {
         entrada31: movimentacoesOrdem[30] || '',
         entrada32: movimentacoesOrdem[31] || '',
       };
-      // console.log(data);
       movimentacoesService
         .atualizar(data)
         .then((res) => {

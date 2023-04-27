@@ -23,9 +23,8 @@ export default function Login() {
   const navigation = useNavigation();
   const [offset] = useState(new Animated.ValueXY({ x: 0, y: 50 }));
   const [opacity] = useState(new Animated.Value(0));
-  const [logoW] = useState(new Animated.Value(250));
-  const [logoH] = useState(new Animated.Value(150));
   const [codigo, setCodigo] = useState("");
+  const [erroCodigo, setErroCodigo] = useState(null);
 
   const [usuarioA, setUsuarioA] = useState({});
   const [pagForm, setPagForm] = useState(1);
@@ -33,32 +32,17 @@ export default function Login() {
   const [visibilidadeCodigo, setVisibilidadeCodigo] = useState(false);
 
   const [carregando, setCarregando] = useState(false);
+  const [altura, setAltura] = useState("45%");
+  const [margem, setMargem] = useState(50);
 
   function tecladoEntra() {
-    Animated.timing(logoW, {
-      toValue: 170,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-
-    Animated.timing(logoH, {
-      toValue: 100,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
+    setAltura("60%");
+    // setMargem(120);
   }
 
   function tecladoSai() {
-    Animated.timing(logoW, {
-      toValue: 250,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
-    Animated.timing(logoH, {
-      toValue: 150,
-      duration: 500,
-      useNativeDriver: false,
-    }).start();
+    setAltura("45%");
+    setMargem(50);
   }
 
   function loginAuto(token) {
@@ -107,6 +91,9 @@ export default function Login() {
             descricaoAnalise: res.data.descricaoAnalise,
           });
           setPagForm(2);
+        } else {
+          setCarregando(false);
+          setErroCodigo("Código inválido");
         }
       })
       .catch((err) => {
@@ -148,15 +135,6 @@ export default function Login() {
     //   }
     // }).catch((err)=>{console.log(err)})
 
-    keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      tecladoEntra
-    );
-    KeyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      tecladoSai
-    );
-
     Animated.parallel([
       Animated.spring(offset.y, {
         toValue: 0,
@@ -172,6 +150,17 @@ export default function Login() {
     ]).start();
   }, []);
 
+  useEffect(() => {
+    keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      tecladoEntra
+    );
+    KeyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      tecladoSai
+    );
+  });
+
   return (
     <ImageBackground
       source={require("../img/foto_login.jpg")}
@@ -181,8 +170,21 @@ export default function Login() {
       <View>
         <Image style={styles.logo} source={require("../img/logo.png")} />
       </View>
-      <View style={styles.fundoConteiner}></View>
-      <View style={styles.conteiner}>
+      <View
+        style={{
+          backgroundColor: "black",
+          opacity: 0.5,
+          width: "100%",
+          height: altura,
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          borderTopLeftRadius: 50,
+        }}
+      ></View>
+      <KeyboardAvoidingView
+        style={[styles.conteiner, { marginBottom: margem }]}
+      >
         {pagForm == 1 ? (
           <View style={styles.chamada}>
             <Text style={styles.chamadaTexto}>
@@ -205,7 +207,7 @@ export default function Login() {
           {pagForm == 1 ? (
             <>
               {visibilidadeCodigo ? (
-                <>
+                <KeyboardAvoidingView style={{width:"100%", marginTop: -10}}>
                   <View style={styles.inputV}>
                     <Input
                       style={styles.input}
@@ -215,6 +217,7 @@ export default function Login() {
                         setCodigo(value);
                       }}
                     />
+                    <Text style={styles.erro}>{erroCodigo}</Text>
                   </View>
 
                   {!carregando ? (
@@ -238,9 +241,9 @@ export default function Login() {
                       setVisibilidadeCodigo(false);
                     }}
                   >
-                    <Text style={styles.textoBt}>Voltar</Text>
+                    <Text style={[styles.textoBt, {marginBottom: 20}]}>Voltar</Text>
                   </TouchableOpacity>
-                </>
+                </KeyboardAvoidingView>
               ) : (
                 <>
                   <TouchableOpacity style={styles.bt} onPress={() => {}}>
@@ -281,7 +284,7 @@ export default function Login() {
         {/* // ) : (
         //   <ActivityIndicator style={styles.indicador} />
         // )} */}
-      </View>
+      </KeyboardAvoidingView>
     </ImageBackground>
   );
 }
@@ -335,17 +338,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
 
-  fundoConteiner: {
-    backgroundColor: "black",
-    opacity: 0.5,
-    width: "100%",
-    height: "45%",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    borderTopLeftRadius: 50,
-  },
-
   chamada: {
     marginLeft: 40,
     marginRight: 40,
@@ -371,6 +363,15 @@ const styles = StyleSheet.create({
 
   input: {
     color: "white",
+  },
+
+  erro: {
+    textAlign: "center",
+    fontSize: 12,
+    fontFamily: "Montserratn",
+    color: "red",
+    marginTop: -20,
+    marginBottom: 30,
   },
 
   bt: {
@@ -400,6 +401,6 @@ const styles = StyleSheet.create({
   },
 
   carregando: {
-    width: 220
+    width: 220,
   },
 });

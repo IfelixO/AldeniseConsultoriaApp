@@ -31,23 +31,21 @@ export default function MovimentacoesParcial(params) {
         ? params.movimentacoesArrayConst.map((el, i) => {
             let separacao = el.split(" - ");
             let sources;
-            let cor;
             switch (separacao[3].trim()) {
               case "Lazer":
                 sources = require("../../img/lazer.png");
-                cor = "red";
                 break;
-              case "Renda":
-                sources = require("../../img/salario.png");
-                cor = "#00958D";
+              case "Transporte":
+                sources = require("../../img/transporte.png");
                 break;
-              case "Contas":
-                sources = require("../../img/fatura.png");
-                cor = "red";
+              case "Alimentação":
+                sources = require("../../img/alimentacao.png");
                 break;
               case "Compras":
                 sources = require("../../img/compras.png");
-                cor = "red";
+                break;
+              case "Estética":
+                sources = require("../../img/estetica.png");
                 break;
             }
             return (
@@ -71,7 +69,7 @@ export default function MovimentacoesParcial(params) {
                   </View>
                   <Text
                     style={{
-                      color: cor,
+                      color: 'red',
                       fontFamily: "Montserratb",
                       fontSize: 16,
                       textAlign: "right",

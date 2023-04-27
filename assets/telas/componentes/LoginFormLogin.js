@@ -16,26 +16,6 @@ export default function LoginFormLogin(params) {
   const [carregando, setCarregando] = useState(false);
   const [login, setLogin] = useState();
   const [senha, setSenha] = useState();
-  const [margin, setMargin] = useState(0);
-
-  function tecladoEntra() {
-    setMargin(-100);
-  }
-
-  function tecladoSai() {
-    setMargin(0);
-  }
-
-  useEffect(() => {
-    keyboardDidShowListener = Keyboard.addListener(
-      "keyboardDidShow",
-      tecladoEntra
-    );
-    KeyboardDidHideListener = Keyboard.addListener(
-      "keyboardDidHide",
-      tecladoSai
-    );
-  });
 
   function entrar() {
     setCarregando(true);
@@ -98,7 +78,6 @@ export default function LoginFormLogin(params) {
               borderRadius: 6,
               justifyContent: "center",
               alignItems: "center",
-              marginBottom: margin,
             }}
             onPress={() => entrar()}
           >
@@ -131,6 +110,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     width: 300,
     gap: 15,
+    marginBottom: -40
   },
 
   input: {
@@ -141,6 +121,14 @@ const styles = StyleSheet.create({
   },
 
   textoAcessar: {
+    color: "#FFF",
+    fontSize: 15,
+    fontFamily: "Montserratb",
+    height: 50,
+    textAlignVertical: "center",
+  },
+
+  textoBt: {
     color: "#FFF",
     fontSize: 15,
     fontFamily: "Montserratb",

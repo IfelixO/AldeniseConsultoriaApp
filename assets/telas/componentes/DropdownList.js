@@ -73,24 +73,35 @@ export default function DropdownList(params) {
           <Text
             style={styles.listaItem}
             onPress={() => {
-              setPlaceholder("Contas");
+              setPlaceholder("Alimentação");
               setAVisibilidade(!visibilidade);
-              params.setTipo("Contas");
+              params.setTipo("Alimentação");
               setCor('black')
             }}
           >
-            Contas
+            Alimentação
           </Text>
           <Text
             style={styles.listaItem}
             onPress={() => {
-              setPlaceholder("Renda");
+              setPlaceholder("Estética");
               setAVisibilidade(!visibilidade);
-              params.setTipo("Renda");
+              params.setTipo("Estética");
               setCor('black')
             }}
           >
-            Renda
+            Estética
+          </Text>
+          <Text
+            style={styles.listaItem}
+            onPress={() => {
+              setPlaceholder("Transporte");
+              setAVisibilidade(!visibilidade);
+              params.setTipo("Transporte");
+              setCor('black')
+            }}
+          >
+            Transporte
           </Text>
         </View>
       ) : null}

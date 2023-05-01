@@ -68,7 +68,7 @@ export default function FeedMeta({ route, navigation }) {
               });
               let entradasArray = [];
               conversao.forEach((el, i) => {
-                if(el != '' && i != 1){
+                if (el != "" && i != 1) {
                   entradasArray.push(el[1]);
                 }
               });
@@ -97,11 +97,8 @@ export default function FeedMeta({ route, navigation }) {
               finalN = finalN.replace(".", "");
               finalN = Number(finalN.replace(",", "."));
               setFinalNumero(finalN);
-              let parcelaNumero = resM.data.parcela.replace("R$", "");
-              parcelaNumero = parcelaNumero.replace(".", "");
-              parcelaNumero = Number(parcelaNumero.replace(",", "."));
               setPrevisao(
-                Math.round((finalN - progressaoMeta) / parcelaNumero)
+                Math.round((finalN - progressaoMeta) / resM.data.parcela)
               );
             })
             .catch((err) => {
@@ -115,7 +112,7 @@ export default function FeedMeta({ route, navigation }) {
   }
 
   function handleAddParcela(parcela) {
-    if (parcela && parcela + progressaoMeta < finalNumero) {
+    // if (parcela && parcela + progressaoMeta < finalNumero) {
       let meses = [
         "jan",
         "fev",
@@ -149,7 +146,7 @@ export default function FeedMeta({ route, navigation }) {
           return "";
         }
       });
-      
+
       let data = {
         id: entradasAtualizadas[0],
         entrada1: entradasAtualizadas[1],
@@ -170,23 +167,23 @@ export default function FeedMeta({ route, navigation }) {
         .catch((err) => {
           console.log(err);
         });
-    }
-    if (parcela && parcela + progressaoMeta >= finalNumero) {
-      // console.log(parcela, progressaoMeta, finalNumero);
-      Alert.alert("Insersão negada", "Parcela excede valor restante");
-    }
+    // }
+    // if (parcela && parcela + progressaoMeta >= finalNumero) {
+    //   // console.log(parcela, progressaoMeta, finalNumero);
+    //   Alert.alert("Insersão negada", "Parcela excede valor restante");
+    // }
   }
 
-  function resetar() {
-    progressaoService
-      .resetar(usuario)
-      .then((res) => {
-        listar();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+  // function resetar() {
+  //   progressaoService
+  //     .resetar(usuario)
+  //     .then((res) => {
+  //       listar();
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
 
   useEffect(() => {
     if (renderiza) {
@@ -242,9 +239,7 @@ export default function FeedMeta({ route, navigation }) {
               width={250}
               animation="pulse"
             />
-            <Text style={styles.cabecalhoPrevisaoTitulo}>
-              Roda financeira
-            </Text>
+            <Text style={styles.cabecalhoPrevisaoTitulo}>Roda financeira</Text>
             <Skeleton
               style={styles.cabecalhoPrevisaoValor}
               height={20}
@@ -280,11 +275,16 @@ export default function FeedMeta({ route, navigation }) {
               })}{" "}
               // {final}
             </Text>
-            <Text style={styles.cabecalhoPrevisaoTitulo}>
-              Previsão de conclusão
-            </Text>
+            <Text style={styles.cabecalhoPrevisaoTitulo}>Roda financeira</Text>
             <Text style={styles.cabecalhoPrevisaoValor}>
-              {previsao} meses com {parcela} ao mês
+              {previsao} 
+              {previsao == 1 ? <Text> mês </Text> : <Text> meses </Text>}
+              com{' '}
+              {Number(parcela).toLocaleString("pt-BR", {
+                style: "currency",
+                currency: "BRL",
+              })}{" "}
+              mensal
             </Text>
           </View>
         )}

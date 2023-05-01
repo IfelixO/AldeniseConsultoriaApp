@@ -21,7 +21,7 @@ export default function CarteiraMapaComp(params) {
   const [porcDespesa4, setPorcDespesa4] = useState();
   const [porcDespesa5, setPorcDespesa5] = useState();
   const [porcDespesa6, setPorcDespesa6] = useState();
-  const [porcOutros, setPorcOutros] = useState();
+  const [porcOutros, setPorcOutros] = useState(0);
   const [porcSobra, setPorcSobra] = useState(0);
   const [custosGrafico, setCustosGrafico] = useState([]);
   const [anguloFinal, setAnguloFinal] = useState();
@@ -33,6 +33,7 @@ export default function CarteiraMapaComp(params) {
       custosService
         .listar(usuarioInt)
         .then((res) => {
+          // console.log(res.data)
           let conversao = Object.keys(res.data).map((key) => {
             return [String(key), res.data[key]];
           });
@@ -111,10 +112,14 @@ export default function CarteiraMapaComp(params) {
             setPorcDespesa6();
             setNomeDespesa6();
           }
-          {
-            despesasOrdenadasPorc.length > 6
-              ? setPorcOutros(despesasOrdenadasPorc.slice(6, 16))
-              : setPorcOutros();
+          let outros = 0
+          if(despesasOrdenadasPorc.length > 6){
+            despesasOrdenadasPorc.forEach((el)=>{
+              outros = outros = el
+            })
+            setPorcOutros(outros)
+          } else {
+            setPorcOutros(0);
           }
           setCustosGrafico([
             { x: "", y: despesasOrdenadasPorc[0] },
@@ -123,7 +128,7 @@ export default function CarteiraMapaComp(params) {
             { x: "", y: despesasOrdenadasPorc[3] },
             { x: "", y: despesasOrdenadasPorc[4] },
             { x: "", y: despesasOrdenadasPorc[5] },
-            { x: "", y: despesasOrdenadasPorc.slice(6, 16) },
+            { x: "", y: outros },
           ]);
           setAnguloFinal(360 - ((100 - TodosSoma) / 100) * 360);
           if (100 - TodosSoma > 0) {
@@ -397,7 +402,7 @@ export default function CarteiraMapaComp(params) {
                   />
                 ) : (
                   <Text style={styles.mapaGraficoLegDespesaPorc}>
-                    {porcOutros}%
+                    {porcOutros.toFixed(2)}%
                   </Text>
                 )}
                 <Text style={styles.mapaGraficoLegDespesaNome}>Outros</Text>

@@ -16,6 +16,27 @@ export default function LoginFormLogin(params) {
   const [carregando, setCarregando] = useState(false);
   const [login, setLogin] = useState();
   const [senha, setSenha] = useState();
+  const [margem, setMargem] = useState(0);
+
+  
+  function tecladoEntra() {
+    setMargem(-120);
+  }
+
+  function tecladoSai() {
+    setMargem(0);
+  }
+
+  useEffect(() => {
+    keyboardDidShowListener = Keyboard.addListener(
+      "keyboardDidShow",
+      tecladoEntra
+    );
+    KeyboardDidHideListener = Keyboard.addListener(
+      "keyboardDidHide",
+      tecladoSai
+    );
+  });
 
   function entrar() {
     setCarregando(true);
@@ -46,7 +67,7 @@ export default function LoginFormLogin(params) {
   }
 
   return (
-    <View style={styles.inputs}>
+    <View style={[styles.inputs,{marginBottom: margem}]}>
       <Input
         style={styles.input}
         placeholder="Login"

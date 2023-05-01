@@ -24,6 +24,7 @@ export default function FeedMetaComp(params) {
   const [valorMeta, setValorMeta] = useState(0);
   const [porcentagemMeta, setPorcentagemMeta] = useState(0);
   const [larguraBarra, setLarguraBarra] = useState(0);
+  const [corBarra, setCorBarra] = useState('#032140');
   const [progressaoMeta, setProgressaoMeta] = useState(0);
   const [previsao, setPrevisao] = useState(0);
   const [parcela, setParcela] = useState(0);
@@ -101,6 +102,7 @@ export default function FeedMetaComp(params) {
                       transformarMoeda(res.data.parcela)
                   )
                 );
+                {porc > 100 ? setCorBarra('green') :null}
               } else {
                 setNada(true)
               }
@@ -201,7 +203,7 @@ export default function FeedMetaComp(params) {
                   style={{
                     width: larguraBarra || 0,
                     height: 15,
-                    backgroundColor: "#032140",
+                    backgroundColor: corBarra,
                     borderRadius: 50,
                     position: "relative",
                     bottom: 15,

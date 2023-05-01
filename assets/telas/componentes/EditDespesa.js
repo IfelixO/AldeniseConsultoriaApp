@@ -30,13 +30,44 @@ export default function EditDespesa(params) {
   );
 
   useEffect(() => {
-    if (params.id > 1 && params.id < 8) {
-      let t = params.id * 40 - 28;
-      setTop(t);
-    }
-    if (params.id > 7) {
-      let t = params.id * 40 - 22;
-      setTop(t);
+    let index = params.id -2
+    switch(index){
+      case 1:
+        setTop(index * 40 - 30);
+      break
+      case 2:
+        setTop(index * 40 - 30);
+      break
+      case 3:
+        setTop(index * 40 - 29);
+      break
+      case 4:
+        setTop(index * 40 - 29);
+      break
+      case 5:
+        setTop(index * 40 - 28);
+      break
+      case 6:
+        setTop(index * 40 - 28);
+      break
+      case 7:
+        setTop(index * 40 - 27);
+      break
+      case 8:
+        setTop(index * 40 - 26);
+      break
+      case 9:
+        setTop(index * 40 - 26);
+      break
+      case 10:
+        setTop(index * 40 - 24);
+      break
+      case 11:
+        setTop(index * 40 - 24);
+      break
+      case 12:
+        setTop(index * 40 - 23);
+      break
     }
   });
 
@@ -46,7 +77,7 @@ export default function EditDespesa(params) {
         alignItems: "center",
         backgroundColor: "#CDD3D9",
         width: "80%",
-        height: 31,
+        height: 33,
         borderRadius: 10,
         position: "absolute",
         top: top,

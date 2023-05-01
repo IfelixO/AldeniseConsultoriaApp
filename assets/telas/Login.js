@@ -37,7 +37,7 @@ export default function Login() {
 
   function tecladoEntra() {
     setAltura("60%");
-    // setMargem(120);
+    setMargem(120);
   }
 
   function tecladoSai() {
@@ -166,7 +166,7 @@ export default function Login() {
       source={require("../img/foto_login.jpg")}
       style={styles.tela}
     >
-      <StatusBar barStyle="light-content" translucent={true} />
+      {/* <StatusBar barStyle="light-content" translucent={true} /> */}
       <View>
         <Image style={styles.logo} source={require("../img/logo.png")} />
       </View>
@@ -398,6 +398,7 @@ const styles = StyleSheet.create({
     fontFamily: "Montserratb",
     height: 50,
     textAlignVertical: "center",
+    textAlign: 'center'
   },
 
   carregando: {

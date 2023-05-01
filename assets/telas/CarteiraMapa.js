@@ -58,8 +58,10 @@ export default function CarteiraMapa({ navigation, route }) {
             return [String(key), res.data[key]];
           });
           let custosArray = [];
-          conversao.forEach((el, i) => {
-            custosArray[i] = conversao[i][1];
+          conversao.forEach((el) => {
+            if (el[1] != " - ") {
+              custosArray.push(el[1]);
+            }
           });
           let soma = 0;
           let valores = [];
@@ -70,7 +72,6 @@ export default function CarteiraMapa({ navigation, route }) {
               valor = valor.replace(".", "");
               valor = Number(valor.replace(",", "."));
               valores.push(valor);
-              // console.log(valor)
             }
             if (i == 2) {
               setReceita(el);
@@ -100,19 +101,8 @@ export default function CarteiraMapa({ navigation, route }) {
         currency: "BRL",
       });
       let despesaNova = nome + " - " + despesaMoeda;
-      let parada;
-      let despesasAtualizadas = custosConst.map((el, i) => {
-        if (el != " - ") {
-          return el;
-        }
-        if (el == " - " && parada != 1) {
-          parada = 1;
-          return despesaNova;
-        }
-        if (parada == 1) {
-          return " - ";
-        }
-      });
+      let despesasAtualizadas = custosConst;
+      despesasAtualizadas.push(despesaNova);
 
       let data = {
         id: despesasAtualizadas[0],
@@ -127,13 +117,18 @@ export default function CarteiraMapa({ navigation, route }) {
         despesa8: despesasAtualizadas[10],
         despesa9: despesasAtualizadas[11],
         despesa10: despesasAtualizadas[12],
+        despesa11: despesasAtualizadas[13],
+        despesa12: despesasAtualizadas[14],
+        despesa13: despesasAtualizadas[15],
+        despesa14: despesasAtualizadas[16],
+        despesa15: despesasAtualizadas[17],
       };
 
       custosService
         .atualizar(data)
         .then((res) => {
           setRenderiza(true);
-          setCustosConst([]);
+          // setCustosConst([]);
         })
         .catch((err) => {
           console.log(err);
@@ -145,7 +140,7 @@ export default function CarteiraMapa({ navigation, route }) {
     setNome(nome);
     setValor(valor);
     setId(i);
-    switch (i) {
+    switch (i - 2) {
       case 1:
         setAbrirEdit1(true);
         break;
@@ -202,40 +197,46 @@ export default function CarteiraMapa({ navigation, route }) {
       let novaDespesa = nome + " - " + valor;
       let data = {
         id: usuario.id,
-        index: i,
+        index: i - 2,
         despesa: novaDespesa,
-        receita: custosConst[1],
-        despesa1: custosConst[2],
-        despesa2: custosConst[3],
-        despesa3: custosConst[4],
-        despesa4: custosConst[5],
-        despesa5: custosConst[6],
-        despesa6: custosConst[7],
-        despesa7: custosConst[8],
-        despesa8: custosConst[9],
-        despesa9: custosConst[10],
-        despesa10: custosConst[11],
+        receita: custosConst[2],
+        despesa1: custosConst[3],
+        despesa2: custosConst[4],
+        despesa3: custosConst[5],
+        despesa4: custosConst[6],
+        despesa5: custosConst[7],
+        despesa6: custosConst[8],
+        despesa7: custosConst[9],
+        despesa8: custosConst[10],
+        despesa9: custosConst[11],
+        despesa10: custosConst[12],
+        despesa11: custosConst[13],
+        despesa12: custosConst[14],
+        despesa13: custosConst[15],
+        despesa14: custosConst[16],
+        despesa15: custosConst[17],
       };
-      setAbrirEdit1(false);
-      setAbrirEdit2(false);
-      setAbrirEdit3(false);
-      setAbrirEdit4(false);
-      setAbrirEdit5(false);
-      setAbrirEdit6(false);
-      setAbrirEdit7(false);
-      setAbrirEdit8(false);
-      setAbrirEdit9(false);
-      setAbrirEdit10(false);
-      setAbrirEdit11(false);
-      setAbrirEdit12(false);
-      setAbrirEdit13(false);
-      setAbrirEdit14(false);
-      setAbrirEdit15(false);
+
       custosService
         .atualizar(data)
         .then((res) => {
           setRenderiza(true);
-          setCustosConst([]);
+          // setCustosConst([]);
+          setAbrirEdit1(false);
+          setAbrirEdit2(false);
+          setAbrirEdit3(false);
+          setAbrirEdit4(false);
+          setAbrirEdit5(false);
+          setAbrirEdit6(false);
+          setAbrirEdit7(false);
+          setAbrirEdit8(false);
+          setAbrirEdit9(false);
+          setAbrirEdit10(false);
+          setAbrirEdit11(false);
+          setAbrirEdit12(false);
+          setAbrirEdit13(false);
+          setAbrirEdit14(false);
+          setAbrirEdit15(false);
         })
         .catch((err) => {
           console.log(err);
@@ -246,24 +247,28 @@ export default function CarteiraMapa({ navigation, route }) {
   function handleExcluiDespesa(i) {
     let data = {
       id: usuario.id,
-      index: i,
-      receita: custosConst[1],
-      despesa1: custosConst[2],
-      despesa2: custosConst[3],
-      despesa3: custosConst[4],
-      despesa4: custosConst[5],
-      despesa5: custosConst[6],
-      despesa6: custosConst[7],
-      despesa7: custosConst[8],
-      despesa8: custosConst[9],
-      despesa9: custosConst[10],
-      despesa10: custosConst[11],
+      index: i - 2,
+      receita: custosConst[2],
+      despesa1: custosConst[3] || ' - ',
+      despesa2: custosConst[4] || ' - ',
+      despesa3: custosConst[5] || ' - ',
+      despesa4: custosConst[6] || ' - ',
+      despesa5: custosConst[7] || ' - ',
+      despesa6: custosConst[8] || ' - ',
+      despesa7: custosConst[9] || ' - ',
+      despesa8: custosConst[10] || ' - ',
+      despesa9: custosConst[11] || ' - ',
+      despesa10: custosConst[12] || ' - ',
+      despesa11: custosConst[13] || ' - ',
+      despesa12: custosConst[14] || ' - ',
+      despesa13: custosConst[15] || ' - ',
+      despesa14: custosConst[16] || ' - ',
+      despesa15: custosConst[17] || ' - ',
     };
     custosService
       .excluir(data)
       .then((res) => {
         setRenderiza(true);
-        setCustosConst([]);
       })
       .catch((err) => {
         console.log(err);
@@ -307,12 +312,14 @@ export default function CarteiraMapa({ navigation, route }) {
             </Text>
           )}
         </View>
-        <AddInput
-          tela="CarteiraMapa"
-          cor="#99B0AF"
-          item="despesa"
-          handleAddDespesa={handleAddDespesa}
-        />
+        {custosConst.length < 18 ? (
+          <AddInput
+            tela="CarteiraMapa"
+            cor="#99B0AF"
+            item="despesa"
+            handleAddDespesa={handleAddDespesa}
+          />
+        ) : null}
         {renderiza ? (
           <Skeleton
             style={styles.linhaSkeleton}
@@ -351,12 +358,14 @@ export default function CarteiraMapa({ navigation, route }) {
               }
             })}
             {abrirEdit1 ? (
-              <EditDespesa
-                id={id}
-                nome={nome}
-                valor={valor}
-                handleEditDespesa={handleEditDespesa}
-              />
+              <>
+                <EditDespesa
+                  id={id}
+                  nome={nome}
+                  valor={valor}
+                  handleEditDespesa={handleEditDespesa}
+                />
+              </>
             ) : null}
             {abrirEdit2 ? (
               <EditDespesa
@@ -430,46 +439,46 @@ export default function CarteiraMapa({ navigation, route }) {
                 handleEditDespesa={handleEditDespesa}
               />
             ) : null}
-            {/* {abrirEdit11 ? (
-            <EditDespesa
-              id={id}
-              nome={nome}
-              valor={valor}
-              handleEditDespesa={handleEditDespesa}
-            />
-          ) : null}
-          {abrirEdit12 ? (
-            <EditDespesa
-              id={id}
-              nome={nome}
-              valor={valor}
-              handleEditDespesa={handleEditDespesa}
-            />
-          ) : null}
-          {abrirEdit13 ? (
-            <EditDespesa
-              id={id}
-              nome={nome}
-              valor={valor}
-              handleEditDespesa={handleEditDespesa}
-            />
-          ) : null}
-          {abrirEdit14 ? (
-            <EditDespesa
-              id={id}
-              nome={nome}
-              valor={valor}
-              handleEditDespesa={handleEditDespesa}
-            />
-          ) : null}
-          {abrirEdit15 ? (
-            <EditDespesa
-              id={id}
-              nome={nome}
-              valor={valor}
-              handleEditDespesa={handleEditDespesa}
-            />
-          ) : null} */}
+            {abrirEdit11 ? (
+              <EditDespesa
+                id={id}
+                nome={nome}
+                valor={valor}
+                handleEditDespesa={handleEditDespesa}
+              />
+            ) : null}
+            {abrirEdit12 ? (
+              <EditDespesa
+                id={id}
+                nome={nome}
+                valor={valor}
+                handleEditDespesa={handleEditDespesa}
+              />
+            ) : null}
+            {abrirEdit13 ? (
+              <EditDespesa
+                id={id}
+                nome={nome}
+                valor={valor}
+                handleEditDespesa={handleEditDespesa}
+              />
+            ) : null}
+            {abrirEdit14 ? (
+              <EditDespesa
+                id={id}
+                nome={nome}
+                valor={valor}
+                handleEditDespesa={handleEditDespesa}
+              />
+            ) : null}
+            {abrirEdit15 ? (
+              <EditDespesa
+                id={id}
+                nome={nome}
+                valor={valor}
+                handleEditDespesa={handleEditDespesa}
+              />
+            ) : null}
           </View>
         )}
       </ScrollView>
@@ -540,13 +549,14 @@ const styles = StyleSheet.create({
   linha: {
     alignItems: "center",
     marginTop: 10,
+    marginBottom: 30,
   },
 
   linhaSkeleton: {
     marginTop: 20,
     width: "80%",
     borderRadius: 10,
-    alignSelf: 'center'
+    alignSelf: "center",
   },
 
   linhaItem: {
